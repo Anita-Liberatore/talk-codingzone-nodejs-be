@@ -6,13 +6,13 @@ module.exports = async function (fastify, opts) {
   fastify.get('/user', async function (request, reply) {
     const users = await got(`https://randomuser.me/api`).json()
 
-    const result = users['results'].map( x => {
-      
-      return {gender: x.gender};
-      }
+    const result = users['results'].map(x => {
+
+      return { gender: x.gender };
+    }
     )
 
-    
+
 
     return reply.send(result)
   })
@@ -33,10 +33,15 @@ module.exports = async function (fastify, opts) {
     const { name } = request.params
     const users = await got(`https://dummyjson.com/users/search?q=${name}`).json()
 
+    const result = users['users'].map(x => {
 
-    reply.send(users['users'].reduce((acc, val) => {
-      acc.push(val['id'])
-    }))
+      return {
+        username: x.username,
+        gender: x.gender
+      };
+    })
+
+    return reply.send(result)
 
   })
 }
