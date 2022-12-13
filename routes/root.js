@@ -4,15 +4,15 @@ const got = require('got')
 module.exports = async function (fastify, opts) {
 
   fastify.get('/user', async function (request, reply) {
-    const users = await got(`https://randomuser.me/api`).json()
+    const users = await got(`https://dummyjson.com/users`).json()
 
-    const result = users['results'].map(x => {
+    const result = users['users'].map(x => {
 
-      return { gender: x.gender };
-    }
-    )
-
-
+      return {
+        username: x.username,
+        gender: x.gender
+      };
+    })
 
     return reply.send(result)
   })
